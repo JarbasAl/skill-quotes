@@ -24,7 +24,7 @@ def quote_of_the_day(lang="en"):
     if not lang.startswith("en"):
         raise AttributeError("language not supported, only english is "
                              "available")
-    url = "http://quotes.rest/qod.json?categorie=life"
+    url = "http://quotes.rest/qod.json"
     response = requests.get(url)
     result = json.loads(response.text)["contents"]["quotes"][0]
     author = result['author']
