@@ -8,9 +8,8 @@ def random_quote(lang="en"):
     if not lang.startswith("en") and not lang.startswith("ru"):
         raise AttributeError("language not supported, only en and ru are "
                              "available")
-    lang = lang[:2]
-    url = "http://api.forismatic.com/api/1.0/?method=getQuote&lang=" + lang\
-          + "&format=json"
+    url = "http://api.forismatic.com/api/1.0/?method=getQuote&lang=" \
+          + lang[:2] + "&format=json"
     response = requests.get(url)
     result = json.loads(response.text)
     author = result['quoteAuthor']
@@ -40,15 +39,15 @@ class QuotesSkill(MycroftSkill):
 
     @intent_handler(IntentBuilder("random_quote").require(
         'Quotes').require("random"))
-    def handle_quotes(self, message):
+    def handle_random_quote(self, message):
         quote, author = random_quote(self.lang)
-        self.speak(quote + ", " + author)
+        self.speak(quote + ". " + author)
 
     @intent_handler(IntentBuilder("quote_of_the_day").require(
         'Quotes').require("day"))
-    def handle_quotes(self, message):
+    def handle_quote_of_the_day(self, message):
         quote, author = quote_of_the_day(self.lang)
-        self.speak(quote + ", " + author)
+        self.speak(quote + ". " + author)
 
 
 def create_skill():
